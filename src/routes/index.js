@@ -7,6 +7,7 @@ router.get("/health", (req, res) => {
 router.use("/users", require("./users"));
 router.use("/bounties", require("./bounties"));
 router.use("/submissions", require("./submissions"));
+router.use("/diagnose", require("./diagnose"));
 router.use("/diagnostic-traces", require("./diagnosticTraces"));
 router.use("/datasets", require("./datasets"));
 router.use("/evaluations", require("./evaluations"));

@@ -22,6 +22,7 @@ The MVP API focuses on the most important flow:
 
 ```bash
 npm install
+npm --prefix client install
 copy .env.example .env
 npm run dev
 ```
@@ -85,3 +86,34 @@ After MongoDB is running:
 ```bash
 npm run seed
 ```
+
+## Frontend
+
+Run the backend and frontend in separate terminals:
+
+```bash
+npm run dev
+```
+
+```bash
+npm run dev:frontend
+```
+
+The React app calls the backend at `http://localhost:5000/api` by default.
+
+## Engine Handoff
+
+The frontend never calls the Java engine directly. It calls:
+
+```text
+POST /api/diagnose/run
+```
+
+Current behavior:
+
+- `USE_MOCK_ENGINE=true` returns a deterministic mock transport trace.
+- `USE_MOCK_ENGINE=false` forwards the same payload to `JAVA_ENGINE_URL/compute/run`.
+
+Your teammate only needs to match the payload/response shape in `src/services/engineService.js`.
+
+See [docs/ENGINE_INTEGRATION.md](docs/ENGINE_INTEGRATION.md) for the exact Java handoff contract.
