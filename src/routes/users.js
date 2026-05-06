@@ -3,6 +3,17 @@ const User = require("../models/User");
 const Submission = require("../models/Submission");
 const { httpError } = require("../utils/httpError");
 
+router.get("/", async (req, res, next) => {
+  try {
+    const query = {};
+    if (req.query.email) query.email = req.query.email;
+    const users = await User.find(query).limit(20);
+    res.json(users);
+  } catch (error) {
+    next(error);
+  }
+});
+
 router.post("/", async (req, res, next) => {
   try {
     const user = await User.create(req.body);
