@@ -6,6 +6,8 @@
   "scripts": {
     "start": "node src/server.js",
     "dev": "nodemon src/server.js",
+    "dev:frontend": "npm --prefix client run dev",
+    "build:frontend": "npm --prefix client run build",
     "check": "node --check src/server.js",
     "seed": "node src/seed/sampleData.js"
   },

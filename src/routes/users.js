@@ -12,6 +12,19 @@ router.post("/", async (req, res, next) => {
   }
 });
 
+router.get("/", async (req, res, next) => {
+  try {
+    const query = {};
+    if (req.query.email) query.email = req.query.email;
+    if (req.query.role) query.role = req.query.role;
+
+    const users = await User.find(query).sort({ createdAt: -1 });
+    res.json(users);
+  } catch (error) {
+    next(error);
+  }
+});
+
 router.get("/:id", async (req, res, next) => {
   try {
     const user = await User.findById(req.params.id);
