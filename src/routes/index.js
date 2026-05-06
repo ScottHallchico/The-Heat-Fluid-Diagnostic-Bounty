@@ -10,5 +10,6 @@ router.use("/submissions", require("./submissions"));
 router.use("/diagnostic-traces", require("./diagnosticTraces"));
 router.use("/datasets", require("./datasets"));
 router.use("/evaluations", require("./evaluations"));
+router.use("/diagnose", require("./diagnose"));
 
 module.exports = router;
