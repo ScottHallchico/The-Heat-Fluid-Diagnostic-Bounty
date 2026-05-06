@@ -1,36 +1,27 @@
 const router = require("express").Router();
-const axios = require("axios");
-const Submission = require("../models/Submission");
 const DiagnosticTrace = require("../models/DiagnosticTrace");
-const { env } = require("../config/env");
+const Submission = require("../models/Submission");
+const { runDiagnosticEngine } = require("../services/engineService");
 const { httpError } = require("../utils/httpError");
 
 router.post("/run", async (req, res, next) => {
   try {
-    const submission = await Submission.findById(req.body.submissionId);
+    const { submissionId } = req.body;
+    const submission = await Submission.findById(submissionId);
     if (!submission) throw httpError(404, "Submission not found");
 
-    let javaResponse;
-    try {
-      const { data } = await axios.post(
-        `${env.javaEngineUrl}/compute/run`,
-        submission.inputData
-      );
-      javaResponse = data;
-    } catch (err) {
-      const status = err.response?.status || 502;
-      const message = err.response?.data?.error || "Java compute engine error";
-      throw httpError(status, message);
-    }
-
-    const trace = await DiagnosticTrace.create({
-      submissionId: submission._id,
-      layers: javaResponse.layers,
-      flowRegime: javaResponse.flowRegime,
-      inferredCauses: javaResponse.inferredCauses,
-      validation: javaResponse.validation,
-      rawEngineResponse: javaResponse
+    const engineTrace = await runDiagnosticEngine({
+      submissionId,
+      inputData: req.body.inputData || submission.inputData,
+      hypotheses: req.body.hypotheses || submission.hypotheses,
+      rootCause: req.body.rootCause || submission.rootCause
     });
+
+    const trace = await DiagnosticTrace.findOneAndUpdate(
+      { submissionId },
+      { submissionId, ...engineTrace },
+      { new: true, upsert: true, runValidators: true, setDefaultsOnInsert: true }
+    );
 
     submission.traceId = trace._id;
     submission.status = "computed";
@@ -44,10 +35,9 @@ router.post("/run", async (req, res, next) => {
 
 router.post("/validate", async (req, res, next) => {
   try {
-    const { data } = await axios.post(
-      `${env.javaEngineUrl}/compute/validate`,
-      req.body
-    );
+    const axios = require("axios");
+    const { env } = require("../config/env");
+    const { data } = await axios.post(`${env.javaEngineUrl}/compute/validate`, req.body);
     res.json(data);
   } catch (err) {
     const status = err.response?.status || 502;
