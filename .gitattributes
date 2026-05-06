@@ -1,6 +1,5 @@
-java-engine/src/**/*.java linguist-language=Java
-java-engine/src/**/*.java linguist-detectable=true
-java-engine/src/**/*.java linguist-vendored=false
+*.java linguist-detectable=true
+*.java linguist-language=Java
+*.java linguist-vendored=false
 
 package-lock.json linguist-generated=true
-client/package-lock.json linguist-generated=true
