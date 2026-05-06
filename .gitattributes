@@ -1,0 +1,3 @@
+java-engine/src/**/*.java linguist-language=Java
+java-engine/src/**/*.java linguist-detectable=true
+java-engine/src/**/*.java linguist-vendored=false
