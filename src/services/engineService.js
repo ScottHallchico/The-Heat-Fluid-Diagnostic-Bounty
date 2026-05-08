@@ -5,10 +5,11 @@ async function runDiagnosticEngine(payload) {
     return buildMockTrace(payload);
   }
 
+  const javaPayload = payload.inputData || payload;
   const response = await fetch(`${env.javaEngineUrl}/compute/run`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(payload)
+    body: JSON.stringify(javaPayload)
   });
 
   if (!response.ok) {

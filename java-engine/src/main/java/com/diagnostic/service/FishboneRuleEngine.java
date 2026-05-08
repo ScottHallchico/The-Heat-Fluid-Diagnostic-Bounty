@@ -24,7 +24,9 @@ public class FishboneRuleEngine {
             new Rule(() -> Re >= 2300 && Re <= 4000,
                      "[Method] Unstable transition flow regime — check pump operation and flow control"),
             new Rule(() -> foulingResistance != null && foulingResistance > 0,
-                     "[Material] Fouling resistance detected — schedule cleaning")
+                     "[Material] Fouling resistance detected — schedule cleaning"),
+            new Rule(() -> Re > 100000 && deltaP > 15000,
+                     "[Machine] High flow velocity causing elevated pressure drop — check pump speed and pipe sizing")
         );
 
         List<String> causes = new ArrayList<>();
