@@ -198,6 +198,32 @@ function App() {
     }
   }
 
+  async function evaluateSubmission(submissionId, form) {
+    setLoading(true);
+    setNotice("");
+    try {
+      await api("/evaluations", {
+        method: "POST",
+        body: {
+          submissionId,
+          scores: {
+            physicsAccuracy: Number(form.physicsAccuracy),
+            reasoningQuality: Number(form.reasoningQuality),
+            validationStrength: Number(form.validationStrength),
+          },
+          feedback: form.feedback,
+        },
+      });
+      const portfolioData = await api(`/users/${student._id}/portfolio`);
+      setPortfolio(portfolioData);
+      setNotice("Evaluation saved. Average score updated.");
+    } catch (error) {
+      setNotice(error.message);
+    } finally {
+      setLoading(false);
+    }
+  }
+
   return (
     <div className="app-shell">
       <aside className="sidebar">
@@ -272,7 +298,7 @@ function App() {
         )}
 
         {activeTab === "trace" && <TraceView trace={latestTrace} />}
-        {activeTab === "portfolio" && <Portfolio portfolio={portfolio} />}
+        {activeTab === "portfolio" && <Portfolio portfolio={portfolio} onEvaluate={evaluateSubmission} />}
         {activeTab === "handoff" && <Handoff />}
       </main>
     </div>
@@ -481,7 +507,23 @@ function TraceView({ trace }) {
   );
 }
 
-function Portfolio({ portfolio }) {
+function Portfolio({ portfolio, onEvaluate }) {
+  const [evalForms, setEvalForms] = React.useState({});
+
+  function toggleForm(id) {
+    setEvalForms((f) => ({ ...f, [id]: f[id] ? null : { physicsAccuracy: 8, reasoningQuality: 7, validationStrength: 7.5, feedback: "" } }));
+  }
+
+  function updateField(id, field, value) {
+    setEvalForms((f) => ({ ...f, [id]: { ...f[id], [field]: value } }));
+  }
+
+  async function submit(submission) {
+    const form = evalForms[submission._id];
+    await onEvaluate(submission._id, form);
+    setEvalForms((f) => ({ ...f, [submission._id]: null }));
+  }
+
   return (
     <section className="panel">
       <div className="panel-heading">
@@ -501,10 +543,44 @@ function Portfolio({ portfolio }) {
             <Metric icon={<Database size={18} />} label="Submissions" value={portfolio.submissions.length} />
           </div>
           {portfolio.submissions.map((submission) => (
-            <div className="portfolio-item" key={submission._id}>
-              <strong>{submission.bountyId?.title || "Untitled bounty"}</strong>
-              <span>{submission.status}</span>
+            <div key={submission._id} className="portfolio-item" style={{ display: "grid", gap: 10 }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                <strong>{submission.bountyId?.title || "Untitled bounty"}</strong>
+                <span>{submission.status}</span>
+              </div>
               <small>{submission.rootCause || "No root cause recorded"}</small>
+              {submission.status !== "evaluated" && (
+                <button
+                  className="primary-action"
+                  style={{ justifySelf: "start", padding: "6px 14px", minHeight: 34, fontSize: 13 }}
+                  onClick={() => toggleForm(submission._id)}
+                >
+                  {evalForms[submission._id] ? "Cancel" : "Evaluate"}
+                </button>
+              )}
+              {evalForms[submission._id] && (
+                <div className="form-grid" style={{ marginTop: 6 }}>
+                  <label>Physics Accuracy (0–10)
+                    <input type="number" min="0" max="10" step="0.1" value={evalForms[submission._id].physicsAccuracy}
+                      onChange={(e) => updateField(submission._id, "physicsAccuracy", Number(e.target.value))} />
+                  </label>
+                  <label>Reasoning Quality (0–10)
+                    <input type="number" min="0" max="10" step="0.1" value={evalForms[submission._id].reasoningQuality}
+                      onChange={(e) => updateField(submission._id, "reasoningQuality", Number(e.target.value))} />
+                  </label>
+                  <label>Validation Strength (0–10)
+                    <input type="number" min="0" max="10" step="0.1" value={evalForms[submission._id].validationStrength}
+                      onChange={(e) => updateField(submission._id, "validationStrength", Number(e.target.value))} />
+                  </label>
+                  <label>Feedback
+                    <input value={evalForms[submission._id].feedback}
+                      onChange={(e) => updateField(submission._id, "feedback", e.target.value)} />
+                  </label>
+                  <button className="primary-action wide" style={{ gridColumn: "1/-1" }} onClick={() => submit(submission)}>
+                    <Send size={16} /> Submit Evaluation
+                  </button>
+                </div>
+              )}
             </div>
           ))}
         </div>
