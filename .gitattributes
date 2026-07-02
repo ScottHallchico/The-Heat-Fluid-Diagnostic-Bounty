@@ -1,0 +1,5 @@
+*.java linguist-detectable=true
+*.java linguist-language=Java
+*.java linguist-vendored=false
+
+package-lock.json linguist-generated=true

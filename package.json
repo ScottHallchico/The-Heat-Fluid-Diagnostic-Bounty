@@ -1,0 +1,39 @@
+{
+  "name": "transport-diagnostic-mongodb-backend",
+  "version": "1.0.0",
+  "description": "MongoDB backend for the Transport Phenomena Diagnostic Bounty platform.",
+  "main": "src/server.js",
+  "scripts": {
+    "prestart": "npm run seed",
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js",
+    "dev:frontend": "npm --prefix client run dev",
+    "build:frontend": "npm --prefix client run build",
+    "check": "node --check src/server.js",
+    "seed": "node src/seed/sampleData.js"
+  },
+  "keywords": [
+    "mongodb",
+    "mongoose",
+    "transport-phenomena",
+    "diagnostic-bounty"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@react-three/fiber": "^9.6.1",
+    "@shadergradient/react": "^2.4.20",
+    "axios": "1.7.9",
+    "camera-controls": "^3.1.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "mongoose": "^8.9.5",
+    "three": "^0.184.0",
+    "three-stdlib": "^2.36.1"
+  },
+  "devDependencies": {
+    "@types/three": "^0.184.1",
+    "nodemon": "^3.1.9"
+  }
+}
