@@ -29,6 +29,7 @@ import {
   YAxis
 } from "recharts";
 import LandingPage from "./LandingPage";
+import DiagnosticWizard from "./Wizard";
 import "./landing.css";
 import "./styles.css";
 
@@ -53,9 +54,7 @@ const defaultSubmission = {
   length: 25,
   roughness: 0.000045,
   flowRate: 0.004,
-  temperature: 25,
-  hypotheses: "Fouling increased internal roughness\nValve partially closed",
-  rootCause: "Likely pipe fouling or restriction"
+  temperature: 25
 };
 
 function Dashboard() {
@@ -177,9 +176,7 @@ function Dashboard() {
         body: {
           bountyId: selectedBounty._id,
           userId: student._id,
-          inputData,
-          hypotheses: submissionForm.hypotheses.split("\n").map((item) => item.trim()).filter(Boolean),
-          rootCause: submissionForm.rootCause
+          inputData
         }
       });
 
@@ -187,9 +184,7 @@ function Dashboard() {
         method: "POST",
         body: {
           submissionId: submission._id,
-          inputData,
-          hypotheses: submission.hypotheses,
-          rootCause: submission.rootCause
+          inputData
         }
       });
 
@@ -246,6 +241,9 @@ function Dashboard() {
           <button className={activeTab === "workspace" ? "active" : ""} onClick={() => setActiveTab("workspace")}>
             <Gauge size={18} /> Workspace
           </button>
+          <button className={activeTab === "wizard" ? "active" : ""} onClick={() => setActiveTab("wizard")}>
+            <Activity size={18} /> Diagnostic Wizard
+          </button>
           <button className={activeTab === "create" ? "active" : ""} onClick={() => setActiveTab("create")}>
             <Plus size={18} /> Create Bounty
           </button>
@@ -294,6 +292,8 @@ function Dashboard() {
             loading={loading}
           />
         )}
+        
+        {activeTab === "wizard" && <DiagnosticWizard api={api} />}
 
         {activeTab === "create" && (
           <CreateBounty
@@ -382,20 +382,6 @@ function Workspace({
             <NumberField label="Roughness" value={submissionForm.roughness} field="roughness" setForm={setSubmissionForm} />
             <NumberField label="Flow rate" value={submissionForm.flowRate} field="flowRate" setForm={setSubmissionForm} />
           </div>
-          <label>
-            Hypotheses
-            <textarea
-              value={submissionForm.hypotheses}
-              onChange={(event) => setSubmissionForm((form) => ({ ...form, hypotheses: event.target.value }))}
-            />
-          </label>
-          <label>
-            Root cause
-            <input
-              value={submissionForm.rootCause}
-              onChange={(event) => setSubmissionForm((form) => ({ ...form, rootCause: event.target.value }))}
-            />
-          </label>
           <button className="primary-action wide" disabled={loading || !selectedBounty}>
             <Send size={18} /> Store Submission and Run Diagnosis
           </button>
@@ -646,9 +632,7 @@ function Handoff() {
     fluidProperties: { rho, mu, k, Cp },
     geometry: { diameter, length, roughness },
     operatingConditions: { flowRate, temperature }
-  },
-  hypotheses: [],
-  rootCause
+  }
 }`}</pre>
       </div>
     </section>

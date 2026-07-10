@@ -11,6 +11,22 @@ public class DiagnosticResponse {
     public List<String> inferredCauses;
     public Validation validation;
     public List<DataPoint> analyticsData;
+    public List<CalculationStep> intermediateCalculations = new java.util.ArrayList<>();
+
+    @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
+    public static class CalculationStep {
+        public String step;
+        public Object value;
+        public String unit;
+        public String equation;
+        
+        public CalculationStep(String step, Object value, String unit, String equation) {
+            this.step = step;
+            this.value = value;
+            this.unit = unit;
+            this.equation = equation;
+        }
+    }
 
     @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
     public static class DataPoint {

@@ -69,4 +69,39 @@ public class PhysicsService {
     public double heatDuty(double massFlowRate, double Cp, double Tin, double Tout) {
         return massFlowRate * Cp * abs(Tout - Tin);
     }
+
+    // --- Mass Transfer ---
+    public double sherwood(double Re, double Sc) {
+        if (Re < 2300) return 3.66;
+        return 0.023 * pow(Re, 0.83) * pow(Sc, 0.33); // Example correlation
+    }
+
+    public double schmidt(double mu, double rho, double D_AB) {
+        return (rho > 0 && D_AB > 0) ? mu / (rho * D_AB) : 0.0;
+    }
+
+    public double massTransferCoefficient(double Sh, double D_AB, double L) {
+        return L > 0 ? (Sh * D_AB) / L : 0.0;
+    }
+
+    public double oxygenTransferRate(double kla, double C_star, double C) {
+        return kla * (C_star - C);
+    }
+
+    // --- Reaction Engineering ---
+    public double conversion(double initialMoles, double finalMoles) {
+        return initialMoles > 0 ? (initialMoles - finalMoles) / initialMoles : 0.0;
+    }
+
+    public double residenceTime(double volume, double volumetricFlowRate) {
+        return volumetricFlowRate > 0 ? volume / volumetricFlowRate : 0.0;
+    }
+
+    public double spaceVelocity(double volumetricFlowRate, double volume) {
+        return volume > 0 ? volumetricFlowRate / volume : 0.0;
+    }
+
+    public double yield(double actualProduct, double theoreticalProduct) {
+        return theoreticalProduct > 0 ? actualProduct / theoreticalProduct : 0.0;
+    }
 }

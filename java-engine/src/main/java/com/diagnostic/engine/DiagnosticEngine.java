@@ -61,6 +61,18 @@ public class DiagnosticEngine {
         ValidationService.ValidationResult vr = validation.sanityCheck(Re, deltaP, Nu, h);
 
         DiagnosticResponse resp = new DiagnosticResponse();
+        
+        resp.intermediateCalculations.add(new DiagnosticResponse.CalculationStep("Velocity", v, "m/s", "v = resolve(velocity, flowRate, D)"));
+        resp.intermediateCalculations.add(new DiagnosticResponse.CalculationStep("Reynolds Number", Re, "", "Re = (rho * v * D) / mu"));
+        resp.intermediateCalculations.add(new DiagnosticResponse.CalculationStep("Flow Regime", flowRegime, "", "classifyFlow(Re)"));
+        resp.intermediateCalculations.add(new DiagnosticResponse.CalculationStep("Friction Factor", frictionFactor, "", "colebrook(Re, epsilon, D)"));
+        resp.intermediateCalculations.add(new DiagnosticResponse.CalculationStep("Pressure Drop", deltaP, "Pa", "dP = f * (L/D) * (rho*v^2/2)"));
+        resp.intermediateCalculations.add(new DiagnosticResponse.CalculationStep("Prandtl Number", Pr, "", "Pr = (mu * Cp) / k"));
+        resp.intermediateCalculations.add(new DiagnosticResponse.CalculationStep("Nusselt Number", Nu, "", "Nu = nusselt(Re, Pr)"));
+        resp.intermediateCalculations.add(new DiagnosticResponse.CalculationStep("Convective H", h, "W/m^2K", "h = Nu * k / D"));
+        if (heatDuty != null) {
+            resp.intermediateCalculations.add(new DiagnosticResponse.CalculationStep("Heat Duty", heatDuty, "W", "Q = m_dot * Cp * deltaT"));
+        }
         resp.layers.integral.deltaP = deltaP;
         resp.layers.integral.heatDuty = heatDuty;
         resp.layers.scaling.Re = Re;
