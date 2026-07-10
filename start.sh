@@ -9,7 +9,7 @@ cd "$DIR"
 # 1. Start the Java Engine
 echo "Starting Java Engine on port 8080..."
 cd java-engine
-mvn spring-boot:run &
+mvn spring-boot:run -Dspring-boot.run.jvmArguments="-Xmx128m -Xms64m" &
 JAVA_PID=$!
 cd ..
 

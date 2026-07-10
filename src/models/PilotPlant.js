@@ -24,7 +24,7 @@ const plantDataSchema = new mongoose.Schema(
     foulingFactor: Number,
     conversion: Number
   },
-  { timestamps: true }
+  { timestamps: true, strict: false }
 );
 
 module.exports = mongoose.model("PilotPlant", plantDataSchema);

@@ -10,11 +10,55 @@ const { rankRootCauses } = require("../services/root_cause_ranker");
 const { generateExplainableRCA } = require("../services/explainable_rca");
 const { generateRecommendations } = require("../services/recommendation_engine");
 const { httpError } = require("../utils/httpError");
+const Submission = require("../models/Submission");
 
-// Run diagnosis
+// Legacy run endpoint
+router.post("/run", async (req, res, next) => {
+  try {
+    const { submissionId } = req.body;
+    const submission = await Submission.findById(submissionId);
+    if (!submission) throw httpError(404, "Submission not found");
+
+    const engineTrace = await runDiagnosticEngine({
+      submissionId,
+      inputData: req.body.inputData || submission.inputData,
+      hypotheses: req.body.hypotheses || submission.hypotheses,
+      rootCause: req.body.rootCause || submission.rootCause
+    });
+
+    const trace = await DiagnosticTrace.findOneAndUpdate(
+      { submissionId },
+      { submissionId, ...engineTrace },
+      { new: true, upsert: true, runValidators: true, setDefaultsOnInsert: true }
+    );
+
+    submission.traceId = trace._id;
+    submission.status = "computed";
+    await submission.save();
+
+    res.status(201).json(trace);
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.post("/validate", async (req, res, next) => {
+  try {
+    const axios = require("axios");
+    const { env } = require("../config/env");
+    const { data } = await axios.post(`${env.javaEngineUrl}/compute/validate`, req.body);
+    res.json(data);
+  } catch (err) {
+    const status = err.response?.status || 502;
+    const message = err.response?.data?.error || "Java compute engine error";
+    next(httpError(status, message));
+  }
+});
+
+// Run diagnosis (New workflow)
 router.post("/", async (req, res, next) => {
   try {
-    const { pilotDataId, industrialDataId } = req.body;
+    const { pilotDataId, industrialDataId, submissionId } = req.body;
     
     // Load data
     const pilotData = await PilotPlant.findById(pilotDataId);
@@ -39,15 +83,40 @@ router.post("/", async (req, res, next) => {
       timestamp: new Date()
     };
 
-    // Store the report in DiagnosticTrace or a new DiagnosticReports collection
-    const trace = await DiagnosticTrace.create({
-      submissionId: pilotDataId, // Mock submission ID for now
+    // Store the report in DiagnosticTrace
+    // If a submissionId was provided (from the Bounty integration), link it
+    const traceData = {
+      submissionId: submissionId || pilotDataId, // Fallback for standalone mode
       layers: { integral: {}, differential: {}, scaling: {} },
       analyticsData: [],
       inferredCauses: rankedCauses.map(r => r.cause),
       validation: { checksPassed: true, warnings: [] },
       flowRegime: "unknown"
-    });
+    };
+
+    let trace;
+    try {
+      trace = await DiagnosticTrace.create(traceData);
+    } catch (e) {
+      if (e.code === 11000) {
+        // Handle unique constraint on submissionId
+        trace = await DiagnosticTrace.findOneAndUpdate(
+          { submissionId: traceData.submissionId },
+          traceData,
+          { new: true }
+        );
+      } else {
+        throw e;
+      }
+    }
+
+    if (submissionId) {
+      const Submission = require("../models/Submission");
+      await Submission.findByIdAndUpdate(submissionId, {
+        traceId: trace._id,
+        status: "computed"
+      });
+    }
 
     res.status(201).json({ report, traceId: trace._id });
   } catch (error) {

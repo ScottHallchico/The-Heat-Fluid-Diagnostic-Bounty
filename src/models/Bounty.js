@@ -16,7 +16,7 @@ const bountySchema = new mongoose.Schema(
     category: {
       type: String,
       required: true,
-      enum: ["momentum", "heat", "mass", "reaction_engineering", "chemical_processes"]
+      enum: ["momentum", "heat", "mass", "reaction_engineering", "chemical_processes", "reaction", "mass_transfer"]
     },
     tags: [
       {
@@ -27,7 +27,7 @@ const bountySchema = new mongoose.Schema(
     ],
     inputTemplate: {
       type: inputTemplateSchema,
-      required: true
+      required: false
     },
     expectedOutputs: [
       {

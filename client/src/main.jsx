@@ -290,10 +290,11 @@ function Dashboard() {
             setSubmissionForm={setSubmissionForm}
             submitDiagnosis={submitDiagnosis}
             loading={loading}
+            onLaunchWizard={() => setActiveTab("wizard")}
           />
         )}
         
-        {activeTab === "wizard" && <DiagnosticWizard api={api} />}
+        {activeTab === "wizard" && <DiagnosticWizard api={api} preselectedBounty={selectedBounty} studentId={student._id} />}
 
         {activeTab === "create" && (
           <CreateBounty
@@ -320,7 +321,8 @@ function Workspace({
   submissionForm,
   setSubmissionForm,
   submitDiagnosis,
-  loading
+  loading,
+  onLaunchWizard
 }) {
   return (
     <section className="workspace-grid">
@@ -370,22 +372,15 @@ function Workspace({
           <Metric icon={<BarChart3 size={18} />} label="Outputs" value={(selectedBounty?.expectedOutputs || []).join(", ") || "-"} />
         </div>
 
-        <form className="diagnosis-form" onSubmit={submitDiagnosis}>
-          <h3>Submit Diagnosis</h3>
-          <div className="form-grid">
-            <NumberField label="Density rho" value={submissionForm.rho} field="rho" setForm={setSubmissionForm} />
-            <NumberField label="Viscosity mu" value={submissionForm.mu} field="mu" setForm={setSubmissionForm} />
-            <NumberField label="Consistency Index K" value={submissionForm.consistencyIndexK} field="consistencyIndexK" setForm={setSubmissionForm} />
-            <NumberField label="Flow Behavior Index n" value={submissionForm.flowBehaviorIndexN} field="flowBehaviorIndexN" setForm={setSubmissionForm} />
-            <NumberField label="Diameter" value={submissionForm.diameter} field="diameter" setForm={setSubmissionForm} />
-            <NumberField label="Length" value={submissionForm.length} field="length" setForm={setSubmissionForm} />
-            <NumberField label="Roughness" value={submissionForm.roughness} field="roughness" setForm={setSubmissionForm} />
-            <NumberField label="Flow rate" value={submissionForm.flowRate} field="flowRate" setForm={setSubmissionForm} />
-          </div>
-          <button className="primary-action wide" disabled={loading || !selectedBounty}>
-            <Send size={18} /> Store Submission and Run Diagnosis
+        <div style={{ marginTop: "30px", padding: "20px", background: "#f8f9fa", borderRadius: "8px", border: "1px solid #e9ecef" }}>
+          <h3 style={{ marginBottom: "15px" }}>Industrial Diagnostic Workflow</h3>
+          <p style={{ marginBottom: "20px", fontSize: "14px", color: "#495057" }}>
+            Launch the automated wizard to dynamically enter equipment-specific parameters, execute the comparison engine, and generate an explainable RCA.
+          </p>
+          <button type="button" className="primary-action wide" onClick={onLaunchWizard} disabled={!selectedBounty} style={{ padding: "12px", fontSize: "15px" }}>
+            <Activity size={18} style={{ marginRight: 8 }} /> Solve via Diagnostic Wizard
           </button>
-        </form>
+        </div>
       </div>
     </section>
   );
@@ -535,8 +530,8 @@ function Portfolio({ portfolio, onEvaluate }) {
     <section className="panel">
       <div className="panel-heading">
         <div>
-          <p className="eyebrow">Student evidence</p>
-          <h2>Diagnostic Portfolio</h2>
+          <p className="eyebrow">Expert Review</p>
+          <h2>RCA Validation History</h2>
         </div>
         <UserRound size={20} />
       </div>
@@ -545,8 +540,8 @@ function Portfolio({ portfolio, onEvaluate }) {
       ) : (
         <div className="portfolio-list">
           <div className="metric-row">
-            <Metric icon={<UserRound size={18} />} label="Student" value={portfolio.user.name} />
-            <Metric icon={<BarChart3 size={18} />} label="Average score" value={portfolio.averageScore || 0} />
+            <Metric icon={<UserRound size={18} />} label="Lead Engineer" value={portfolio.user.name} />
+            <Metric icon={<BarChart3 size={18} />} label="AI Accuracy Rating" value={portfolio.averageScore || 0} />
             <Metric icon={<Database size={18} />} label="Submissions" value={portfolio.submissions.length} />
           </div>
           {portfolio.submissions.map((submission) => (
@@ -555,7 +550,12 @@ function Portfolio({ portfolio, onEvaluate }) {
                 <strong>{submission.bountyId?.title || "Untitled bounty"}</strong>
                 <span>{submission.status}</span>
               </div>
-              <small>{submission.rootCause || "No root cause recorded"}</small>
+              <div style={{ padding: "8px", background: "#f8f9fa", borderRadius: "4px", fontSize: "14px" }}>
+                <strong>Automated RCA: </strong> 
+                {submission.traceId?.inferredCauses?.length > 0 
+                  ? submission.traceId.inferredCauses.join(', ') 
+                  : submission.rootCause || "No root cause recorded"}
+              </div>
               {submission.status !== "evaluated" && (
                 <button
                   className="primary-action"
