@@ -375,20 +375,32 @@ export default function DiagnosticWizard({ api, preselectedBounty, studentId }) 
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 10 }}>
                 <div style={{ padding: 10, background: '#fff', borderRadius: 4, border: '1px solid #dee2e6' }}>
                   <small style={{ color: '#495057' }}>Reynolds Number (Re)</small><br/>
-                  <strong>{report.physicsTrace.layers?.scaling?.Re ?? "-"}</strong>
+                  <strong>{report.physicsTrace.layers?.scaling?.Re ? Number(report.physicsTrace.layers.scaling.Re).toFixed(2) : "-"}</strong>
                 </div>
                 <div style={{ padding: 10, background: '#fff', borderRadius: 4, border: '1px solid #dee2e6' }}>
                   <small style={{ color: '#495057' }}>Friction Factor (f)</small><br/>
-                  <strong>{report.physicsTrace.layers?.scaling?.frictionFactor ?? "-"}</strong>
+                  <strong>{report.physicsTrace.layers?.scaling?.frictionFactor ? Number(report.physicsTrace.layers.scaling.frictionFactor).toFixed(4) : "-"}</strong>
                 </div>
                 <div style={{ padding: 10, background: '#fff', borderRadius: 4, border: '1px solid #dee2e6' }}>
                   <small style={{ color: '#495057' }}>Pressure Drop (ΔP)</small><br/>
-                  <strong>{report.physicsTrace.layers?.integral?.deltaP ?? "-"} Pa</strong>
+                  <strong>{report.physicsTrace.layers?.integral?.deltaP ? Number(report.physicsTrace.layers.integral.deltaP).toFixed(2) : "-"} Pa</strong>
                 </div>
               </div>
-              <div style={{ marginTop: 15, padding: 10, background: '#fff', borderRadius: 4, border: '1px solid #dee2e6' }}>
+
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10, marginTop: 10 }}>
+                <div style={{ padding: 10, background: '#fff', borderRadius: 4, border: '1px solid #dee2e6' }}>
+                  <small style={{ color: '#495057' }}>Navier-Stokes (Differential Momentum)</small><br/>
+                  <strong style={{ fontSize: '13px' }}>{report.physicsTrace.layers?.differential?.velocityProfile?.dominantBehavior || "Solving N-S momentum bounds..."}</strong>
+                </div>
+                <div style={{ padding: 10, background: '#fff', borderRadius: 4, border: '1px solid #dee2e6' }}>
+                  <small style={{ color: '#495057' }}>Thermodynamic Energy Balance</small><br/>
+                  <strong style={{ fontSize: '13px' }}>{report.physicsTrace.layers?.integral?.energyBalance?.method || "First Law verification..."}</strong>
+                </div>
+              </div>
+
+              <div style={{ marginTop: 10, padding: 10, background: '#fff', borderRadius: 4, border: '1px solid #dee2e6' }}>
                 <small style={{ color: '#495057' }}>Flow Regime Evaluation</small><br/>
-                <strong>{String(report.physicsTrace.flowRegime).toUpperCase()}</strong>
+                <strong>{String(report.physicsTrace.flowRegime || "").toUpperCase()}</strong>
               </div>
             </div>
           )}
