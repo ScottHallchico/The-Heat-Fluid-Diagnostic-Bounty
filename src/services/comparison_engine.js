@@ -1,18 +1,20 @@
 function comparePlants(pilotData, industryData) {
   const comparison = {};
-  const parameters = [
-    "density", "viscosity", "flowRate", "velocity", "pressure", 
-    "temperature", "pipeDiameter", "pipeLength", "surfaceRoughness", 
-    "specificHeat", "thermalConductivity", "heatDuty", "overallU", 
-    "residenceTime", "foulingFactor", "conversion"
-  ];
-
-  for (const param of parameters) {
-    if (pilotData[param] !== undefined && industryData[param] !== undefined) {
-      const pilot = pilotData[param];
-      const industry = industryData[param];
-      const difference = industry - pilot;
-      const percentageDifference = pilot !== 0 ? (difference / pilot) * 100 : 0;
+  
+  // Convert Mongoose documents to plain objects if necessary
+  const pilot = pilotData.toObject ? pilotData.toObject() : pilotData;
+  const industry = industryData.toObject ? industryData.toObject() : industryData;
+  
+  // Dynamically iterate over all keys instead of a hardcoded list
+  for (const param of Object.keys(pilot)) {
+    // Skip database specific fields and non-numeric fields if necessary
+    if (param === '_id' || param === '__v' || param === 'equipmentId') continue;
+    
+    if (pilot[param] !== undefined && industry[param] !== undefined) {
+      const pilotVal = pilot[param];
+      const indVal = industry[param];
+      const difference = indVal - pilotVal;
+      const percentageDifference = pilotVal !== 0 ? (difference / pilotVal) * 100 : 0;
       let severity = "low";
       if (Math.abs(percentageDifference) > 20) severity = "high";
       else if (Math.abs(percentageDifference) > 10) severity = "medium";
