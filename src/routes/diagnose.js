@@ -74,12 +74,36 @@ router.post("/", async (req, res, next) => {
     const rca = generateExplainableRCA(rankedCauses, comparison);
     const recommendations = generateRecommendations(rankedCauses);
 
+    // Integrate the Java engine (runDiagnosticEngine) for physics verification
+    let physicsTrace = null;
+    try {
+      const javaPayload = {
+        fluidProperties: { 
+          rho: industryData.density || pilotData.density || 997, 
+          mu: industryData.viscosity || pilotData.viscosity || 0.00089 
+        },
+        geometry: { 
+          diameter: industryData.pipeDiameter || industryData.tubeDiameter || pilotData.tubeDiameter || 0.05, 
+          length: industryData.pipeLength || industryData.tubeLength || pilotData.tubeLength || 25, 
+          roughness: industryData.surfaceRoughness || 0.000045 
+        },
+        operatingConditions: { 
+          flowRate: industryData.flowRate || industryData.hotFluidFlowRate || pilotData.flowRate || 0.004, 
+          temperature: industryData.temperature || 25 
+        }
+      };
+      physicsTrace = await runDiagnosticEngine(javaPayload);
+    } catch (err) {
+      console.warn("Java Engine failed or skipped:", err.message);
+    }
+
     const report = {
       comparison,
       hypotheses: validatedHypotheses,
       rankedCauses,
       rca,
       recommendations,
+      physicsTrace,
       timestamp: new Date()
     };
 

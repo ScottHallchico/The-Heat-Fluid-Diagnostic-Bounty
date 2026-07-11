@@ -367,6 +367,31 @@ export default function DiagnosticWizard({ api, preselectedBounty, studentId }) 
               {report.recommendations.map((r, idx) => <li key={idx}>{r}</li>)}
             </ul>
           </div>
+
+          {report.physicsTrace && (
+            <div className="panel" style={{ marginTop: 20, borderLeft: '4px solid #0b7285', background: '#e3fafc' }}>
+              <h4>Java Physics Engine Validation</h4>
+              <p style={{ fontSize: '13px', marginBottom: 10 }}>Mathematical proof computed via Navier-Stokes engine integration.</p>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 10 }}>
+                <div style={{ padding: 10, background: '#fff', borderRadius: 4, border: '1px solid #dee2e6' }}>
+                  <small style={{ color: '#495057' }}>Reynolds Number (Re)</small><br/>
+                  <strong>{report.physicsTrace.layers?.scaling?.Re ?? "-"}</strong>
+                </div>
+                <div style={{ padding: 10, background: '#fff', borderRadius: 4, border: '1px solid #dee2e6' }}>
+                  <small style={{ color: '#495057' }}>Friction Factor (f)</small><br/>
+                  <strong>{report.physicsTrace.layers?.scaling?.frictionFactor ?? "-"}</strong>
+                </div>
+                <div style={{ padding: 10, background: '#fff', borderRadius: 4, border: '1px solid #dee2e6' }}>
+                  <small style={{ color: '#495057' }}>Pressure Drop (ΔP)</small><br/>
+                  <strong>{report.physicsTrace.layers?.integral?.deltaP ?? "-"} Pa</strong>
+                </div>
+              </div>
+              <div style={{ marginTop: 15, padding: 10, background: '#fff', borderRadius: 4, border: '1px solid #dee2e6' }}>
+                <small style={{ color: '#495057' }}>Flow Regime Evaluation</small><br/>
+                <strong>{String(report.physicsTrace.flowRegime).toUpperCase()}</strong>
+              </div>
+            </div>
+          )}
         </div>
       )}
     </div>
