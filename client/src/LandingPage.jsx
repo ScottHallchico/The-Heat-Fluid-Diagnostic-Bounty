@@ -21,6 +21,7 @@ import {
   CheckCircle2,
   Star,
   ExternalLink,
+  Database,
 } from "lucide-react";
 
 /* ───── animated counter ───── */
