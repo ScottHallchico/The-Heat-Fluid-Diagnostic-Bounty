@@ -45,7 +45,12 @@ Keep the response professional, highly technical, and directly focused on biopro
     res.end();
   } catch (error) {
     console.error("Gemini API Error:", error);
-    res.status(500).json({ error: error.message || "Failed to generate analysis" });
+    if (!res.headersSent) {
+      res.status(500).json({ error: "Gemini API Error: " + error.message });
+    } else {
+      res.write(`\n\n[Error: Gemini API Error: ${error.message}]`);
+      res.end();
+    }
   }
 });
 
