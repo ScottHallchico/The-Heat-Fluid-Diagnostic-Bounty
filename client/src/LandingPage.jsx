@@ -98,9 +98,14 @@ export default function LandingPage() {
             <a href="#metrics">Results</a>
             <a href="#diagnostics">Diagnostics</a>
           </div>
-          <button className="landing-cta-sm" onClick={() => navigate("/dashboard")}>
-            Launch Dashboard <ArrowRight size={16} />
-          </button>
+          <div style={{display: 'flex', gap: '10px'}}>
+            <button className="landing-cta-sm" onClick={() => navigate("/dashboard")}>
+              ChemE Module <ArrowRight size={16} />
+            </button>
+            <button className="landing-cta-sm" style={{ background: '#7048e8' }} onClick={() => navigate("/biotech")}>
+              Biotech Module <ArrowRight size={16} />
+            </button>
+          </div>
         </div>
       </nav>
 
@@ -154,14 +159,15 @@ export default function LandingPage() {
             Advanced physics engine for analyzing heat transfer, fluid flow, pressure dynamics, and thermal performance.
             Root-cause analysis meets real-time diagnostic intelligence.
           </p>
-          <div className="landing-hero-actions">
+          <div className="landing-hero-actions" style={{ display: 'flex', gap: '15px', flexWrap: 'wrap', justifyContent: 'center' }}>
             <button className="landing-cta-primary" onClick={() => navigate("/dashboard")}>
-              Open Diagnostic Dashboard
+              Chemical Engineering Module
               <ArrowRight size={18} />
             </button>
-            <a href="#features" className="landing-cta-ghost">
-              Explore Features <ChevronDown size={18} />
-            </a>
+            <button className="landing-cta-primary" style={{ background: '#7048e8', borderColor: '#7048e8' }} onClick={() => navigate("/biotech")}>
+              Biotech Engineering Module
+              <ArrowRight size={18} />
+            </button>
           </div>
           <div className="landing-hero-stats">
             <div className="landing-stat-item">
@@ -340,9 +346,14 @@ export default function LandingPage() {
         <div className="landing-section-inner landing-cta-inner">
           <h2>Ready to Diagnose?</h2>
           <p>Launch the full diagnostic dashboard and start analyzing heat transfer, fluid flow, and system performance in real time.</p>
-          <button className="landing-cta-primary landing-cta-large" onClick={() => navigate("/dashboard")}>
-            Launch Dashboard Now <ExternalLink size={20} />
-          </button>
+          <div style={{display: 'flex', gap: '20px', justifyContent: 'center', flexWrap: 'wrap', marginTop: '20px'}}>
+            <button className="landing-cta-primary landing-cta-large" onClick={() => navigate("/dashboard")}>
+              Launch ChemE Module <ExternalLink size={20} />
+            </button>
+            <button className="landing-cta-primary landing-cta-large" style={{ background: '#7048e8', borderColor: '#7048e8' }} onClick={() => navigate("/biotech")}>
+              Launch Biotech Module <ExternalLink size={20} />
+            </button>
+          </div>
         </div>
       </section>
 

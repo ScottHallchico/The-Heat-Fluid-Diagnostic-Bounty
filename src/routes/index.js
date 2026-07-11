@@ -16,6 +16,7 @@ router.use("/pilot-data", require("./pilotData"));
 router.use("/industry-data", require("./industryData"));
 
 // The new diagnostic routes
+router.use("/biotech", require("./biotech"));
 router.use("/run-diagnosis", require("./diagnose"));
 router.get("/comparison", (req, res) => res.json({ message: "Comparison API" }));
 router.get("/root-cause", (req, res) => res.json({ message: "Root Cause API" }));

@@ -30,6 +30,7 @@ import {
 } from "recharts";
 import LandingPage from "./LandingPage";
 import DiagnosticWizard from "./Wizard";
+import BiotechPage from "./BiotechPage";
 import "./landing.css";
 import "./styles.css";
 
@@ -722,6 +723,7 @@ function App() {
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/biotech" element={<BiotechPage />} />
       </Routes>
     </BrowserRouter>
   );

@@ -21,6 +21,7 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "@google/genai": "^2.11.0",
     "@react-three/fiber": "^9.6.1",
     "@shadergradient/react": "^2.4.20",
     "axios": "1.7.9",

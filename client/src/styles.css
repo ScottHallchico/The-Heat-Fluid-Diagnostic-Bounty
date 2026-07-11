@@ -485,3 +485,19 @@ pre {
     grid-template-columns: 1fr;
   }
 }
+
+/* Markdown Styles */
+.markdown-body table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+.markdown-body th, .markdown-body td {
+  border: 1px solid #dbe5e8;
+  padding: 10px 14px;
+  text-align: left;
+}
+.markdown-body th {
+  background-color: #f4f7f8;
+  font-weight: 700;
+}

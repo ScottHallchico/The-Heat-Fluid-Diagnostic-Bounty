@@ -1,0 +1,51 @@
+Q3 — Industrial significance (biotech-specific):
+"Penicillin production is a secondary metabolite — it is produced when cell growth slows and nutrients are limited. Explain how the mixing problem identified above could specifically affect penicillin yield, and what operational change you would recommend."
+Expected answer:
+Penicillin G is produced during the idiophase — the non-growth phase when carbon source is limited and cells switch to secondary metabolism. Uniform substrate distribution is critical during this phase because penicillin biosynthesis is sensitive to local glucose concentration. In a poorly mixed vessel, cells near the impeller experience different glucose, oxygen, and pH conditions than cells in the bulk. This heterogeneity leads to population-level metabolic inconsistency — some cells are in productive idiophase while others may re-enter growth phase due to local nutrient excess, reducing overall penicillin titre. Recommended operational change: increase agitator speed to compensate for increased viscosity, or switch to a more appropriate impeller geometry (Rushton turbine to pitched blade or hydrofoil) that provides better bulk mixing at high viscosity
+
+Q1 — Organism knowledge (biotech-specific):
+"Explain why Penicillium chrysogenum broth becomes non-Newtonian during fermentation, and at what stage of the fermentation you would expect the non-Newtonian behaviour to be most pronounced."
+Expected answer:
+Penicillium chrysogenum is a filamentous fungus that grows in mycelial form — a network of branching hyphae rather than individual cells. As biomass accumulates during the growth phase (typically 24-72 hours), the interlocking mycelial network creates a viscoelastic, pseudoplastic fluid. The non-Newtonian behaviour is most pronounced during the late growth phase and early production phase (48-96 hours) when mycelial mass concentration is highest. At low shear rates (near the vessel wall or in poorly mixed zones), viscosity is very high, impeding mass transfer. At high shear rates (near the impeller), viscosity drops significantly.
+
+The broth temperature has risen 2.5°C above the optimal setpoint for E. coli growth. From your knowledge of microbial physiology, explain what happens to the culture at 39.5°C and what the likely impact on recombinant insulin production would be."
+Expected answer:
+E. coli has an optimal growth temperature of 37°C. At 39.5°C, heat shock response is induced — the cell upregulates heat shock proteins (GroEL, DnaK) which compete with recombinant protein production for cellular resources. Recombinant protein yield typically drops significantly. Additionally, inclusion body formation rate increases at elevated temperatures, which may paradoxically increase or decrease soluble insulin yield depending on the expression system. If temperature exceeds 42°C, cell viability declines rapidly.
+
+Q1 — Biological identification (conceptual):
+"The computed effective roughness has increased sevenfold from the clean baseline. From your knowledge of downstream bioprocessing, identify TWO biological materials that could be responsible for this fouling and explain the mechanism by which each deposits on the membrane surface."
+Expected answer:
+Cell debris from incomplete centrifugation — E. coli cells and membrane fragments physically block membrane pores and increase flow resistance
+Protein aggregates — proteins released during cell lysis (nucleic acids, intracellular enzymes) denature and aggregate on the membrane surface during filtration
+
+Problem 7: Heat Exchanger Fouling
+Scenario
+A shell-and-tube heat exchanger is unable to maintain the desired outlet temperature. The platform calculates a reduction in heat transfer coefficient and an increase in thermal resistance.Question
+Why does fouling reduce heat transfer?
+Answer:
+Fouling deposits form an insulating layer on the heat transfer surface. This additional thermal resistance reduces the rate of heat transfer between the hot and cold fluids
+
+Q3 — SIP knowledge (biotech-specific):
+"Explain what SIP (Steam-in-Place) sterilization is, why it is necessary before each fermentation batch, and why it might cause protein fouling on the fermenter jacket."
+Expected answer:
+SIP is the process of sterilizing the fermenter vessel and associated pipework in place by circulating pressurised steam (121°C, 15 psi minimum) for a defined hold time (typically 20-30 minutes). It is necessary to achieve sterility assurance level (SAL) of 10⁻⁶ before inoculation to prevent contamination of the culture. Protein fouling occurs because residual proteins from the previous batch or from media components in contact with the hot jacket surface denature at sterilization temperatures and deposit as a layer on the stainless steel surface. This is why cleaning (CIP) must precede sterilization (SIP) — incomplete CIP leaves protein residuals that then bake onto the surface during SIP.
+
+Problem 10: Yogurt Production
+Scenario
+A dairy plant producing yogurt reports that the final product remains watery and does not develop the expected gel structure. The diagnostic platform reports slower lactic acid production than expected.
+
+Q1 – Biological Understanding
+Question
+Why is lactic acid production important during yogurt manufacture?
+Answer
+Lactic acid lowers the pH of milk, causing casein proteins to coagulate and form the characteristic yogurt gel. Insufficient acid production prevents proper gel formation, resulting in a thin and watery product.
+
+Q2 – Diagnostic Reasoning
+Question
+The platform generated the following hypotheses:
+Low starter culture activity
+Inadequate incubation temperature
+Contamination
+Which hypothesis best explains the observation?
+Answer
+Low starter culture activity is the most likely explanation because reduced lactic acid production directly affects milk coagulation and yogurt texture
