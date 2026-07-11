@@ -93,6 +93,22 @@ router.post("/", async (req, res, next) => {
         }
       };
       physicsTrace = await runDiagnosticEngine(javaPayload);
+
+      // Inject differential and energy balance text if the Java engine returns them empty
+      if (physicsTrace && physicsTrace.layers) {
+        if (!physicsTrace.layers.differential) physicsTrace.layers.differential = {};
+        physicsTrace.layers.differential.velocityProfile = {
+          dominantBehavior: (physicsTrace.flowRegime === "laminar" || physicsTrace.flowRegime === "LAMINAR") 
+            ? "Parabolic profile bounded by shear layer" 
+            : "Flattened turbulent core with viscous sublayer"
+        };
+        
+        if (!physicsTrace.layers.integral.energyBalance) {
+          physicsTrace.layers.integral.energyBalance = {
+            method: "Mechanical Energy Balance (Bernoulli + Darcy-Weisbach friction loss)"
+          };
+        }
+      }
     } catch (err) {
       console.warn("Java Engine failed or skipped:", err.message);
     }
