@@ -8,7 +8,7 @@ function comparePlants(pilotData, industryData) {
   // Dynamically iterate over all keys instead of a hardcoded list
   for (const param of Object.keys(pilot)) {
     // Skip database specific fields and non-numeric fields if necessary
-    if (param === '_id' || param === '__v' || param === 'equipmentId') continue;
+    if (param === '_id' || param === '__v' || param === 'equipmentId' || param === 'createdAt' || param === 'updatedAt') continue;
     
     if (pilot[param] !== undefined && industry[param] !== undefined) {
       const pilotVal = pilot[param];
@@ -20,8 +20,8 @@ function comparePlants(pilotData, industryData) {
       else if (Math.abs(percentageDifference) > 10) severity = "medium";
 
       comparison[param] = {
-        pilot,
-        industry,
+        pilot: pilotVal,
+        industry: indVal,
         difference,
         percentageDifference,
         severity,
