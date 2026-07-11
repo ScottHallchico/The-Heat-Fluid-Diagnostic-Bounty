@@ -156,7 +156,7 @@ export default function LandingPage() {
             <br />
             <span className="landing-gradient-text">Intelligence Platform</span>
           </h1>
-          <p className="landing-hero-sub">
+          <p className="landing-hero-sub" style={{ color: "#212529", fontWeight: "500", textShadow: "0px 1px 2px rgba(255,255,255,0.5)" }}>
             Advanced multi-physics platform bridging strict Java Navier-Stokes thermodynamics with Google Gemini AI.
             Execute automated 5-Whys Root Cause Analysis across Chemistry and Biotech domains instantly.
           </p>
