@@ -148,16 +148,16 @@ export default function LandingPage() {
         <div className="landing-hero-content">
           <div className="landing-hero-badge">
             <Zap size={14} />
-            <span>AI-Powered Thermal Intelligence</span>
+            <span>Gemini AI x Navier-Stokes Integration</span>
           </div>
           <h1>
-            Diagnose Heat &amp; Fluid
+            Industrial Diagnostic
             <br />
-            <span className="landing-gradient-text">Systems Instantly</span>
+            <span className="landing-gradient-text">Intelligence Platform</span>
           </h1>
           <p className="landing-hero-sub">
-            Advanced physics engine for analyzing heat transfer, fluid flow, pressure dynamics, and thermal performance.
-            Root-cause analysis meets real-time diagnostic intelligence.
+            Advanced multi-physics platform bridging strict Java Navier-Stokes thermodynamics with Google Gemini AI.
+            Execute automated 5-Whys Root Cause Analysis across Chemistry and Biotech domains instantly.
           </p>
           <div className="landing-hero-actions" style={{ display: 'flex', gap: '15px', flexWrap: 'wrap', justifyContent: 'center' }}>
             <button className="landing-cta-primary" onClick={() => navigate("/dashboard")}>
@@ -201,12 +201,12 @@ export default function LandingPage() {
             <p>Every module is purpose-built for transport phenomena diagnostics — from laminar pipe flow to complex industrial heat exchangers.</p>
           </div>
           <div className="landing-features-grid">
-            <FeatureCard icon={<Thermometer size={28} />} title="Heat Transfer Analysis" description="Compute convective, conductive, and radiative heat transfer coefficients across complex geometries with Nusselt correlations." delay={0} />
-            <FeatureCard icon={<Droplets size={28} />} title="Fluid Flow Diagnostics" description="Reynolds number classification, friction factor calculation, and pressure drop analysis for pipe networks and open channels." delay={100} />
-            <FeatureCard icon={<Gauge size={28} />} title="Pressure Drop Mapping" description="Darcy-Weisbach and Colebrook-White solvers for accurate minor and major loss computation in industrial piping." delay={200} />
-            <FeatureCard icon={<Cpu size={28} />} title="AI Root-Cause Analysis" description="Automated hypothesis generation and validation using physics-informed reasoning trees and anomaly detection." delay={300} />
-            <FeatureCard icon={<GitBranch size={28} />} title="Diagnostic Traces" description="Every calculation is explainable — full intermediate step tracing with equations, units, and physical assumptions." delay={400} />
-            <FeatureCard icon={<ShieldCheck size={28} />} title="Bounty System" description="Industrial bounty workflow: submit problems, receive student diagnoses, and evaluate with structured scoring rubrics." delay={500} />
+            <FeatureCard icon={<Cpu size={28} />} title="Explainable 5-Whys AI" description="Gemini-powered streaming hypothesis generation and validation for complex biological and chemical unit operations." delay={0} />
+            <FeatureCard icon={<Waves size={28} />} title="Navier-Stokes Validation" description="Java compute engine calculating strict differential momentum bounds and thermodynamic energy balances." delay={100} />
+            <FeatureCard icon={<Activity size={28} />} title="Dynamic Diagnostic Wizard" description="Automated parameter extraction and delta-comparison for generic equipment (Bioreactors, CSTRs, PFRs)." delay={200} />
+            <FeatureCard icon={<GitBranch size={28} />} title="Hypothesis Validation Matrix" description="Strict JavaScript rule engine mapping parameter anomalies (±20% thresholds) directly to equipment failure modes." delay={300} />
+            <FeatureCard icon={<BarChart3 size={28} />} title="Dimensional Scaling" description="Reynolds, Nusselt, and friction factor scaling to mathematically validate pilot-to-industrial translations." delay={400} />
+            <FeatureCard icon={<ShieldCheck size={28} />} title="MERN Architecture" description="Robust decoupled microservices using MongoDB, Express, React, and Node.js for high-speed diagnostic routing." delay={500} />
           </div>
         </div>
       </section>
@@ -221,10 +221,10 @@ export default function LandingPage() {
           </div>
           <div className="landing-steps-grid">
             {[
-              { num: "01", icon: <FlaskConical size={24} />, title: "Define the Problem", desc: "Create a diagnostic bounty describing the anomalous operating conditions — unexpected pressure drop, poor heat transfer, etc." },
-              { num: "02", icon: <Activity size={24} />, title: "Submit Parameters", desc: "Enter fluid properties (ρ, μ), pipe geometry, operating conditions, and your diagnostic hypotheses." },
-              { num: "03", icon: <Cpu size={24} />, title: "Engine Computes", desc: "Our Java physics engine calculates Reynolds number, friction factor, Nusselt number, and pressure drop. AI generates root-cause analysis." },
-              { num: "04", icon: <CheckCircle2 size={24} />, title: "Review Trace", desc: "Inspect every intermediate calculation, validate hypotheses against computed results, and build your diagnostic portfolio." },
+              { num: "01", icon: <Database size={24} />, title: "Select Equipment Data", desc: "Choose a faulty industrial dataset (e.g., Biotech Bioreactor, Chemistry Distillation Column) from the MongoDB database." },
+              { num: "02", icon: <Activity size={24} />, title: "Run Diagnostic Wizard", desc: "The Node.js engine dynamically extracts properties and runs percentage comparisons to detect anomalous parameters." },
+              { num: "03", icon: <Waves size={24} />, title: "Java Physics Validation", desc: "The Java engine proves the mathematical bounds using fluid mechanics, Navier-Stokes, and thermodynamic energy balances." },
+              { num: "04", icon: <CheckCircle2 size={24} />, title: "Explainable AI RCA", desc: "The AI generates a contextual 5-Whys report and engineering mitigation recommendations streamed directly to the UI." },
             ].map((step, i) => (
               <div key={step.num} className="landing-step-card" style={{ animationDelay: `${i * 120}ms` }}>
                 <div className="landing-step-num">{step.num}</div>
@@ -366,7 +366,7 @@ export default function LandingPage() {
             </div>
             <span>HeatFluid<strong>Dx</strong></span>
           </div>
-          <p>AI-powered transport phenomena diagnostic platform. Built with React, Spring Boot, MongoDB, and a physics compute engine.</p>
+          <p>AI-powered transport phenomena diagnostic platform. Built with the MERN stack, Google Gemini, and a strict Java physics engine.</p>
           <div className="landing-footer-links">
             <a href="#features">Features</a>
             <a href="#how-it-works">How It Works</a>
