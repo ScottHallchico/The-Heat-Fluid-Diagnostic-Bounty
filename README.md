@@ -2,6 +2,8 @@
 
 Backend service for the MongoDB part of the **Transport Phenomena Diagnostic Bounty** project.
 
+🌐 **Live Application**: https://the-heat-fluid-diagnostic-bounty.vercel.app/
+
 This service owns the database design from `mongodb .pdf`:
 
 - `users`
