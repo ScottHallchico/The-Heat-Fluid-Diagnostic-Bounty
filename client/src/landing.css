@@ -146,6 +146,17 @@
   transform: translateY(-1px);
 }
 
+.landing-cta-sm.biotech {
+  border-color: rgba(112, 72, 232, 0.5);
+  background: rgba(112, 72, 232, 0.12);
+  color: #b197fc;
+}
+
+.landing-cta-sm.biotech:hover {
+  background: rgba(112, 72, 232, 0.25);
+  border-color: #7048e8;
+}
+
 /* ─── hero ─── */
 .landing-hero {
   position: relative;
@@ -256,6 +267,15 @@
 .landing-cta-primary:hover {
   transform: translateY(-2px);
   box-shadow: 0 12px 44px rgba(11, 114, 133, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.landing-cta-primary.biotech {
+  background: linear-gradient(135deg, #7048e8, #5f3dc4);
+  box-shadow: 0 8px 32px rgba(112, 72, 232, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+.landing-cta-primary.biotech:hover {
+  box-shadow: 0 12px 44px rgba(112, 72, 232, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 
 .landing-cta-large {

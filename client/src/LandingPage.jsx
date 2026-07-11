@@ -103,7 +103,7 @@ export default function LandingPage() {
             <button className="landing-cta-sm" onClick={() => navigate("/dashboard")}>
               ChemE Module <ArrowRight size={16} />
             </button>
-            <button className="landing-cta-sm" style={{ background: '#7048e8' }} onClick={() => navigate("/biotech")}>
+            <button className="landing-cta-sm biotech" onClick={() => navigate("/biotech")}>
               Biotech Module <ArrowRight size={16} />
             </button>
           </div>
@@ -165,7 +165,7 @@ export default function LandingPage() {
               Chemical Engineering Module
               <ArrowRight size={18} />
             </button>
-            <button className="landing-cta-primary" style={{ background: '#7048e8', borderColor: '#7048e8' }} onClick={() => navigate("/biotech")}>
+            <button className="landing-cta-primary biotech" onClick={() => navigate("/biotech")}>
               Biotech Engineering Module
               <ArrowRight size={18} />
             </button>
@@ -351,7 +351,7 @@ export default function LandingPage() {
             <button className="landing-cta-primary landing-cta-large" onClick={() => navigate("/dashboard")}>
               Launch ChemE Module <ExternalLink size={20} />
             </button>
-            <button className="landing-cta-primary landing-cta-large" style={{ background: '#7048e8', borderColor: '#7048e8' }} onClick={() => navigate("/biotech")}>
+            <button className="landing-cta-primary landing-cta-large biotech" onClick={() => navigate("/biotech")}>
               Launch Biotech Module <ExternalLink size={20} />
             </button>
           </div>
